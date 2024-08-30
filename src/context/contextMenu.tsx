@@ -1,6 +1,8 @@
 import {ReactElement, useEffect, useState} from "react";
 import {InnerClass} from "./innerClass";
 
+
+
 export function useContextMenu(target:string|HTMLElement|null,body:ReactElement){
     useEffect(()=>{
         let d:HTMLElement|null;
