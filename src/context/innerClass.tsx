@@ -1,8 +1,8 @@
 import {ReactElement} from "react";
 import {createRoot, Root} from "react-dom/client";
-import "./index.css"
 
-type Props = {
+
+type PropsClass = {
 
     target?: HTMLElement,
     body?: ReactElement
@@ -10,11 +10,11 @@ type Props = {
 
 export class InnerClass {
     private readonly innerRoot: Root
-    private props: Props;
+    private props: PropsClass;
     private readonly div: HTMLDivElement;
 
 
-    constructor(props: Readonly<Props>) {
+    constructor(props: Readonly<PropsClass>) {
         this.click = this.click.bind(this)
         this.props = props
         this.div = document.createElement("div");
@@ -32,23 +32,56 @@ export class InnerClass {
     click() {
         this.innerRoot.render(null)
     }
+    getHeight(){
+        var body = document.body,
+            html = document.documentElement;
+
+        var height = Math.max( body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight );
+        return height
+    }
+    getWidth(){
+        var body = document.body,
+            html = document.documentElement;
+
+        var width = Math.max( body.scrollWidth, body.offsetWidth,
+            html.clientWidth, html.scrollWidth, html.offsetWidth );
+        return width
+    }
 
     contextAction = (e: MouseEvent) => {
         e.preventDefault();
+        this.div.style.visibility="hidden"
         this.innerRoot!.render(this.props.body)
         setTimeout(() => {
 
-            const bodyH = document.documentElement.scrollHeight;
+
+            const bodyH = this.getHeight()
+            const bodyW = this.getWidth()
             const bodyB = this.div.offsetHeight
-            alert(bodyH-e.clientY)
-            if((bodyH-e.clientY)<bodyB){
-                this.div.style.top = (e.clientY - bodyB) + "px"
-                this.div.style.left = e.clientX + "px"
+            const bodyBW = this.div.offsetWidth
+            let YY=e.pageY
+            let WW=e.pageX
+            //alert(YY+" "+WW)
+
+            if((bodyH-YY)<bodyB+50){
+                this.div.style.top = (YY - bodyB) + "px"
+                if(bodyW-WW<bodyBW+50){
+                    this.div.style.left = (WW-bodyBW) + "px"
+                }else{
+                    this.div.style.left = WW + "px"
+                }
+
             }else{
-                this.div.style.top = e.clientY + "px"
-                this.div.style.left = e.clientX + "px"
+                this.div.style.top = YY + "px"
+                if(bodyW-WW<bodyBW+50){
+                    this.div.style.left = (WW-bodyBW) + "px"
+                }else{
+                    this.div.style.left = WW + "px"
+                }
             }
-        })
+            this.div.style.visibility="visible"
+        },50)
 
     }
 

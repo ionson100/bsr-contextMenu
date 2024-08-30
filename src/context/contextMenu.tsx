@@ -1,9 +1,15 @@
 import {ReactElement, useEffect, useState} from "react";
 import {InnerClass} from "./innerClass";
 
-export function useContextMenu(idTarget:string,body:ReactElement){
+export function useContextMenu(target:string|HTMLElement|null,body:ReactElement){
     useEffect(()=>{
-        const innerClass=new InnerClass({target:document.getElementById(idTarget)!,body:body})
+        let d:HTMLElement|null;
+        if(target instanceof HTMLElement){
+            d=target;
+        }else{
+            d=document.getElementById(target as string)
+        }
+        const innerClass=new InnerClass({target:d!,body:body})
         return ()=>{
             innerClass.ContextMenuWillUnmount()
         }

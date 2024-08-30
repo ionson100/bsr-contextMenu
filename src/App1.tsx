@@ -1,7 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-import {useContextMenu} from "./context/contextMenu";
 import {InnerClass} from "./context/innerClass";
 
 class App1 extends React.Component<any, any> {
