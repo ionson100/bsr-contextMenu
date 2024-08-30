@@ -1,25 +1,7 @@
 'use strict';
 
 var react = require('react');
-var require$$0 = require('react-dom');
-
-var createRoot;
-
-var m = require$$0;
-if (process.env.NODE_ENV === 'production') {
-  createRoot = m.createRoot;
-  m.hydrateRoot;
-} else {
-  var i$1 = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-  createRoot = function(c, o) {
-    i$1.usingClientEntryPoint = true;
-    try {
-      return m.createRoot(c, o);
-    } finally {
-      i$1.usingClientEntryPoint = false;
-    }
-  };
-}
+var client = require('react-dom/client');
 
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
@@ -131,7 +113,7 @@ var ContextMenu = /** @class */ (function () {
         this.props = props;
         this.div = document.createElement("div");
         this.div.className = "bsr-context-menu";
-        this.innerRoot = createRoot(this.div);
+        this.innerRoot = client.createRoot(this.div);
         document.body.appendChild(this.div);
         this.id = v4();
         this.div.onclick = function () {
