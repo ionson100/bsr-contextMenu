@@ -1,17 +1,19 @@
 import {ReactElement} from "react";
 import {createRoot, Root} from "react-dom/client";
-
+import { v4 as uuidv4 } from 'uuid';
 
 type PropsClass = {
 
     target?: HTMLElement,
     body?: ReactElement
 }
+const MenuMap=new Map<string, ContextMenu>();
 
 export class ContextMenu {
     private readonly innerRoot: Root
     private props: PropsClass;
     private readonly div: HTMLDivElement;
+    private id:string;
 
 
     constructor(props: Readonly<PropsClass>) {
@@ -21,25 +23,28 @@ export class ContextMenu {
         this.div.className = "bsr-context-menu"
         this.innerRoot = createRoot(this.div);
         document.body.appendChild(this.div)
-        this.ContextMenuDidMount()
+
+        this.id=uuidv4()
         this.div.onclick=()=>{
             this.click()
         }
+        this.ContextMenuDidMount()
+
 
 
     }
 
-    click() {
+    private click() {
         this.innerRoot.render(null)
     }
-    getHeight(){
+    private getHeight(){
         var body = document.body,
             html = document.documentElement;
 
         return Math.max(body.scrollHeight, body.offsetHeight,
             html.clientHeight, html.scrollHeight, html.offsetHeight)
     }
-    getWidth(){
+    private getWidth(){
         var body = document.body,
             html = document.documentElement;
 
@@ -47,10 +52,12 @@ export class ContextMenu {
             html.clientWidth, html.scrollWidth, html.offsetWidth)
     }
 
-    contextAction = (e: MouseEvent) => {
+    private contextAction = (e: MouseEvent) => {
         e.preventDefault();
         this.div.style.visibility="hidden"
-        this.innerRoot.render(null)
+        MenuMap.forEach((menu) => {{
+            menu.click()
+        }})
         this.innerRoot!.render(this.props.body)
         setTimeout(() => {
 
@@ -88,16 +95,19 @@ export class ContextMenu {
     private ContextMenuDidMount() {
         window.addEventListener("click", this.click)
         this.props.target?.addEventListener("contextmenu", this.contextAction)
-
+        MenuMap.set(this.id,this);
 
     }
 
     public ContextMenuWillUnmount() {
         window.removeEventListener("click", this.click)
         this.props.target?.removeEventListener("contextmenu", this.contextAction)
+        MenuMap.delete(this.id)
+        setTimeout(()=>{
+            this.innerRoot.unmount();
+            document.body.removeChild<HTMLDivElement>(this.div)
+        })
 
-        this.innerRoot.unmount();
-        document.body.removeChild<HTMLDivElement>(this.div)
 
     }
 }
