@@ -1,2 +1,2 @@
-import { ReactElement } from "react";
-export declare function useContextMenu(target: string | HTMLElement | null, body: ReactElement): null;
+import React, { ReactElement } from "react";
+export declare const useContextMenu: (target: React.RefObject<HTMLElement> | null, body: ReactElement) => void;

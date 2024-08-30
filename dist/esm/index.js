@@ -33917,24 +33917,16 @@ var ContextMenu = /** @class */ (function () {
     return ContextMenu;
 }());
 
-function useContextMenu(target, body) {
+var useContextMenu = function (target, body) {
     reactExports.useEffect(function () {
-        var d;
-        if (target instanceof HTMLElement) {
-            d = target;
+        var menu;
+        if (target === null || target === void 0 ? void 0 : target.current) {
+            menu = new ContextMenu({ target: target.current, body: body });
         }
-        else {
-            d = document.getElementById(target);
-            if (!d) {
-                throw new Error(" bsr-contextMenu. Found HTMLElement by id is null :" + target);
-            }
-        }
-        var innerClass = new ContextMenu({ target: d, body: body });
         return function () {
-            innerClass.ContextMenuWillUnmount();
+            menu === null || menu === void 0 ? void 0 : menu.ContextMenuWillUnmount();
         };
-    }, []);
-    return null;
-}
+    }, [body, target]);
+};
 
 export { ContextMenu, useContextMenu };

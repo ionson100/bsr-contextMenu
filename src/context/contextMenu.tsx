@@ -1,24 +1,24 @@
-import {ReactElement, useEffect} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {ContextMenu} from "./innerClass";
+import {render} from "@testing-library/react";
 
 
 
-export function useContextMenu(target:string|HTMLElement|null,body:ReactElement){
-    useEffect(()=>{
+export const useContextMenu = function (target: React.RefObject<HTMLElement> | null, body: ReactElement) {
 
-        let d:HTMLElement|null;
-        if(target instanceof HTMLElement){
-            d=target;
-        }else{
-            d=document.getElementById(target as string)
-            if(!d){
-                throw new Error(" bsr-contextMenu. Found HTMLElement by id is null :"+target)
-            }
+    useEffect(() => {
+
+        let menu: ContextMenu | undefined
+
+        if (target?.current) {
+            menu = new ContextMenu({target: target.current, body: body})
         }
-        const innerClass=new ContextMenu({target:d!,body:body})
-        return ()=>{
-            innerClass.ContextMenuWillUnmount()
+
+
+        return () => {
+            menu?.ContextMenuWillUnmount()
         }
-    },[])
-    return null;
+    }, [body, target])
+
+
 }
