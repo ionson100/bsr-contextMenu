@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import {InnerClass} from "./context/innerClass";
+import {ContextMenu} from "./context/innerClass";
 
 class App1 extends React.Component<any, any> {
-    private mRevDiv=React.createRef<HTMLDivElement>();
-    private menu?:InnerClass
+    private mRevDiv=React.createRef<HTMLButtonElement>();
+    private menu?:ContextMenu
     constructor(props: Readonly<any>) {
         super(props);
 
     }
     componentDidMount() {
-      this.menu=new InnerClass({target:this.mRevDiv.current!, body:<div>aass</div>})
+      this.menu=new ContextMenu({target:this.mRevDiv.current!, body:<div>aass</div>})
     }
 
 
@@ -18,9 +18,9 @@ class App1 extends React.Component<any, any> {
         return (
             <div className="App">
 
-                <div ref={this.mRevDiv} id={'333'} style={{width: 100, height: 100, background: "black"}}>
+                <button ref={this.mRevDiv} id={'333'} style={{width: 100, height: 100, background: "black"}}>
 
-                </div>
+                </button>
             </div>
         );
     }

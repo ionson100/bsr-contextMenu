@@ -1,8 +1,24 @@
-.bsr-context-menu{
- background: white;
- position: absolute;
- width: fit-content;
- height: fit-content;
- border: 1px solid black;
- box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+.bsr-context-menu {
+    background: white;
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;
+}
+
+.assa {
+    cursor: pointer;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #e5e3e3;
+
+}
+.assa:hover{
+    background: #e5e1e1;
+}
+.assa:active{
+    background: #f6bfbf;
 }

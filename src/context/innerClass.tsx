@@ -8,7 +8,7 @@ type PropsClass = {
     body?: ReactElement
 }
 
-export class InnerClass {
+export class ContextMenu {
     private readonly innerRoot: Root
     private props: PropsClass;
     private readonly div: HTMLDivElement;
@@ -36,22 +36,21 @@ export class InnerClass {
         var body = document.body,
             html = document.documentElement;
 
-        var height = Math.max( body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight );
-        return height
+        return Math.max(body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight)
     }
     getWidth(){
         var body = document.body,
             html = document.documentElement;
 
-        var width = Math.max( body.scrollWidth, body.offsetWidth,
-            html.clientWidth, html.scrollWidth, html.offsetWidth );
-        return width
+        return Math.max(body.scrollWidth, body.offsetWidth,
+            html.clientWidth, html.scrollWidth, html.offsetWidth)
     }
 
     contextAction = (e: MouseEvent) => {
         e.preventDefault();
         this.div.style.visibility="hidden"
+        this.innerRoot.render(null)
         this.innerRoot!.render(this.props.body)
         setTimeout(() => {
 
@@ -85,15 +84,18 @@ export class InnerClass {
 
     }
 
+
     private ContextMenuDidMount() {
         window.addEventListener("click", this.click)
         this.props.target?.addEventListener("contextmenu", this.contextAction)
+
 
     }
 
     public ContextMenuWillUnmount() {
         window.removeEventListener("click", this.click)
         this.props.target?.removeEventListener("contextmenu", this.contextAction)
+
         this.innerRoot.unmount();
         document.body.removeChild<HTMLDivElement>(this.div)
 
