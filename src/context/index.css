@@ -1,0 +1,7 @@
+.bsr-context-menu{
+ background: white;
+ position: absolute;
+ width: fit-content;
+ height: fit-content;
+ border: 1px solid black;
+}
