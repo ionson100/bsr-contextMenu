@@ -111,6 +111,7 @@ var ContextMenu = /** @class */ (function () {
         this.props = props;
         this.div = document.createElement("div");
         this.div.className = "bsr-context-menu";
+        this.div.style.visibility = "hidden";
         this.innerRoot = createRoot(this.div);
         document.body.appendChild(this.div);
         this.id = v4();
@@ -121,6 +122,7 @@ var ContextMenu = /** @class */ (function () {
     }
     ContextMenu.prototype.click = function () {
         this.innerRoot.render(null);
+        this.div.style.visibility = "hidden";
     };
     ContextMenu.prototype.getHeight = function () {
         var body = document.body, html = document.documentElement;

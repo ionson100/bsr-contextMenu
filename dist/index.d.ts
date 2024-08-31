@@ -10,7 +10,7 @@ declare class ContextMenu {
     private readonly innerRoot;
     private props;
     private readonly div;
-    private id;
+    private readonly id;
     constructor(props: Readonly<PropsClass>);
     private click;
     private getHeight;

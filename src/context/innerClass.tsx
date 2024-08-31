@@ -13,7 +13,7 @@ export class ContextMenu {
     private readonly innerRoot: Root
     private props: PropsClass;
     private readonly div: HTMLDivElement;
-    private id:string;
+    private readonly id:string;
 
 
     constructor(props: Readonly<PropsClass>) {
@@ -21,6 +21,7 @@ export class ContextMenu {
         this.props = props
         this.div = document.createElement("div");
         this.div.className = "bsr-context-menu"
+        this.div.style.visibility = "hidden"
         this.innerRoot = createRoot(this.div);
         document.body.appendChild(this.div)
 
@@ -36,6 +37,7 @@ export class ContextMenu {
 
     private click() {
         this.innerRoot.render(null)
+        this.div.style.visibility = "hidden"
     }
     private getHeight(){
         var body = document.body,
