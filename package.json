@@ -1,7 +1,7 @@
 {
   "name": "bsr-context-menu",
   "version": "2.2.46",
-  "description": "React component left sidebar",
+  "description": "React component context menu",
   "author": "ionson100",
   "license": "MIT",
   "keywords": ["contextmeny","context meny"],
