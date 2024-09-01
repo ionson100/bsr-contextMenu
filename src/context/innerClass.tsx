@@ -108,7 +108,9 @@ export class ContextMenu {
         setTimeout(()=>{
             this.innerRoot.unmount();
             document.body.removeChild<HTMLDivElement>(this.div)
+            this.props.target=undefined
         })
+
 
 
     }

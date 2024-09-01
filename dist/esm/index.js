@@ -147,6 +147,7 @@ var ContextMenu = /** @class */ (function () {
         setTimeout(function () {
             _this.innerRoot.unmount();
             document.body.removeChild(_this.div);
+            _this.props.target = undefined;
         });
     };
     return ContextMenu;
